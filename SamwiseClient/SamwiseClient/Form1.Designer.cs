@@ -36,13 +36,13 @@
             // 
             this.debugLog.Location = new System.Drawing.Point(12, 12);
             this.debugLog.Name = "debugLog";
-            this.debugLog.Size = new System.Drawing.Size(776, 397);
+            this.debugLog.Size = new System.Drawing.Size(900, 721);
             this.debugLog.TabIndex = 0;
             this.debugLog.Text = "";
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(618, 415);
+            this.runButton.Location = new System.Drawing.Point(918, 10);
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(170, 23);
             this.runButton.TabIndex = 1;
@@ -54,7 +54,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1100, 745);
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.debugLog);
             this.Name = "MainForm";

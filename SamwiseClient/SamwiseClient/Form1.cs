@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Security.Principal;
 using System.DirectoryServices;
 using System.Net.NetworkInformation;
+using System.Diagnostics;
 
 
 
@@ -33,6 +34,8 @@ namespace SamwiseClient
             debugLog.Clear();
             debugLog.AppendText("Start running\n");
 
+
+            // Research: PC Identification for monitoring
             var sid = GetComputerSid();
             var macs = "";
             var pc_name = System.Environment.MachineName;
@@ -41,11 +44,6 @@ namespace SamwiseClient
             debugLog.AppendText("SID: "+sid+"\n");
             debugLog.AppendText("PC name: " + pc_name + "\n");
             debugLog.AppendText("User Name: " + user_name + "\n");
-
-
-
-
-
 
 
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
@@ -65,13 +63,51 @@ namespace SamwiseClient
                     "Type: " + nic.NetworkInterfaceType+"\n");
                
             }
+            //--------------
 
 
+            // Research: Global PC resource utilization 
+            // CPU
+            // Memory
+            // Disk
+            // Network
+            // GPU 
 
 
+            /* List of counters 
+            var performanceCounterCategories = PerformanceCounterCategory.GetCategories();
+            foreach (var performanceCounterCategory in performanceCounterCategories)
+            {
+                var performanceCounters = performanceCounterCategory.GetCounters("");
+                debugLog.AppendText("\n\n\n\n --------------------     Displaying performance counters for " + performanceCounterCategory.CategoryName + " category:--");
 
+                foreach (PerformanceCounter performanceCounter in performanceCounters)
+                {
+                     debugLog.AppendText(performanceCounter.CounterName + "\n");
+                }
+
+                debugLog.AppendText("  -- instance: ");
+                foreach (string instance in performanceCounterCategory.GetInstanceNames())
+                {
+                    debugLog.AppendText("{{"+instance+"}}");
+                }
+
+                debugLog.AppendText("\n");
+
+            }
+            //*/
+
+            // PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+            PerformanceCounter ramCounter = new PerformanceCounter("LogicalDisk", "Free Megabytes","C:");
+            debugLog.AppendText(ramCounter.NextValue().ToString());
 
 
         }
+
+        //--------------
+
+        
+
+
     }
 }
