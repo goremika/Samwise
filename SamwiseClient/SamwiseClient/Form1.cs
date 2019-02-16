@@ -11,7 +11,9 @@ using System.Security.Principal;
 using System.DirectoryServices;
 using System.Net.NetworkInformation;
 using System.Diagnostics;
-
+using SamwiseClient.lib.monitoring;
+using SamwiseClient.lib.metrics;
+using SamwiseClient.lib.storages;
 
 
 namespace SamwiseClient
@@ -97,16 +99,47 @@ namespace SamwiseClient
             }
             //*/
 
-            // PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-            PerformanceCounter ramCounter = new PerformanceCounter("LogicalDisk", "Free Megabytes","C:");
-            debugLog.AppendText(ramCounter.NextValue().ToString());
+            PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+            debugLog.AppendText(ramCounter.NextValue().ToString() + "\n");
+            ramCounter = new PerformanceCounter("Memory", "System Code Total Bytes");
+            debugLog.AppendText(ramCounter.NextValue().ToString() + "\n");
 
+            //PerformanceCounter ramCounter = new PerformanceCounter("LogicalDisk", "Free Megabytes","C:");
 
+            /*
+            PerformanceCounter c = new PerformanceCounter("Processor Information", "% Processor Time", "_Total");
+            c.NextValue();
+            for (var i = 0; i < 20; i++)
+            {
+                System.Threading.Thread.Sleep(1000);
+                debugLog.AppendText((c.NextValue()).ToString() + "\n");
+            }*/
+
+            //    c = new PerformanceCounter("Processor Information", "% Idle Time", "_Total");
+            //    debugLog.AppendText((c.NextValue()*100).ToString() + "\n");
+
+        }
+
+        private void monitoringStart_Click(object sender, EventArgs e)
+        {
+            IMetric me = new PerformaceCounterAbsolute("Memory", "Available MBytes");
+            IMetric me1 = new PerformaceCounterAbsolute("Memory", "Page Faults/sec");
+            IMetric me2 = new PerformaceCounterAbsolute("Memory", "Pages/sec");
+            IMetric ms = new PerformaceCounterAbsolute("System", "File Read Operations/sec");
+            IMetric ms1 = new PerformaceCounterAbsolute("System", "File Write Operations/sec");
+            IMetric ms2 = new PerformaceCounterAbsolute("System", "Context Switches/sec");
+            IMetric ms3 = new PerformaceCounterAbsolute("System", "System Calls/sec");
+            IMetric ms4 = new PerformaceCounterAbsolute("System", "Processor Queue Length");
+            IMetric ms5 = new PerformaceCounterAbsolute("System", "Processes");
+            IMetric ms6 = new PerformaceCounterAbsolute("System", "Threads");
+            IStorage storage = new LocalCsv("local_storage.csv");
+            IMonitoring mon = new IterativeMonitoring(3000, new IMetric[] { me, me1, me2, ms, ms1, ms2, ms3, ms4, ms5, ms6  }, new IStorage[] { storage });
+            mon.Start();
         }
 
         //--------------
 
-        
+
 
 
     }
